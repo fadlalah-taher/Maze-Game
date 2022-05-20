@@ -1,10 +1,11 @@
 window.onload = function(){
 
     // Function
-    
+
     function gameStart(){
         active = true;
         changeBackgroundColor("#eeeeee");
+        status.innerHTML = "S   >   E ";
     }
 
     function gameEnd(){
@@ -16,10 +17,17 @@ window.onload = function(){
         }
     }
 
+    function resetGame(){
+        active = false;
+        won = true;
+        score = 0;
+        status.innerHTML = "Game Reset!";
+    }
+
     function cheating(){
         if(active){
             active = false;
-            alert("You are Cheating !! :(")
+            status.innerHTML = "You are Cheating !  Go inside :)";
         }
     }
 
@@ -54,6 +62,7 @@ window.onload = function(){
     var end = document.getElementById("end");
     var status = document.getElementById("status");
     var game = document.getElementById("game");
+    var boundaryExample = document.getElementById("example")
 
     // Variables
 
@@ -63,11 +72,15 @@ window.onload = function(){
 
     // Event Listener
 
-    start.addEventListener("click", function(){
+    start.addEventListener("click",function(){
+        resetGame();
+    });
+
+    start.addEventListener("mouseover", function(){
         gameStart();
     });
 
-    end.addEventListener("click", function(){
+    end.addEventListener("mouseover", function(){
         gameEnd();
     });
 
@@ -76,7 +89,8 @@ window.onload = function(){
             checkBoundries();
         });
     }
-    status.addEventListener("mouseover", function(){
+    
+    game.addEventListener("mouseleave", function(){
         cheating();
     });
 };
