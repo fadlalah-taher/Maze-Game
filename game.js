@@ -1,19 +1,34 @@
 window.onload = function(){
 
     // Function
-
+    function cheating(){
+        if(active){
+            active = false;
+            alert("You are Cheating !! :(")
+        }
+    }
     function checkBoundries(){
         if(active){
             changeBackgroundColor("red");
             active = false;
             won = false;
             score -= 10;
+            displayResult(won);
         }
     }
 
     function changeBackgroundColor(color){
         for(var i = 0; i < boundaries.length ; i++){
             boundaries[i].style.backgroundColor = color;
+        }
+    }
+
+    function displayResult(won){
+        if(won){
+            status.innerHTML = "You Won! Your Score is " + score ;
+        }
+        else{
+            status.innerHTML = "You Lost! Your Score is " + score ;
         }
     }
     // DOM
@@ -37,4 +52,7 @@ window.onload = function(){
             checkBoundries();
         });
     }
+    status.addEventListener("mouseover", function(){
+        cheating();
+    });
 };
