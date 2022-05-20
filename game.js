@@ -16,12 +16,13 @@ window.onload = function(){
             displayResult(won);
         }
     }
-
+    // Reset 
     function resetGame(){
         active = false;
         won = true;
         score = 0;
         status.innerHTML = "Game Reset!";
+        changeBackgroundColor("#eeeeee");
     }
 
     function cheating(){
@@ -55,6 +56,7 @@ window.onload = function(){
             status.innerHTML = "You Lost! Your Score is " + score ;
         }
     }
+    
     // DOM
 
     var boundaries = document.getElementsByClassName("boundary");
@@ -89,7 +91,7 @@ window.onload = function(){
             checkBoundries();
         });
     }
-    
+
     game.addEventListener("mouseleave", function(){
         cheating();
     });
