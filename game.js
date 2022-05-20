@@ -16,12 +16,12 @@ window.onload = function(){
             displayResult(won);
         }
     }
-    // Reset 
-    function resetGame(){
+    // Restart
+    function restartGame(){
         active = false;
         won = true;
         score = 0;
-        status.innerHTML = "Game Reset!";
+        status.innerHTML = "Restart Game!";
         changeBackgroundColor("#eeeeee");
     }
 
@@ -56,7 +56,7 @@ window.onload = function(){
             status.innerHTML = "You Lost! Your Score is " + score ;
         }
     }
-    
+
     // DOM
 
     var boundaries = document.getElementsByClassName("boundary");
@@ -64,7 +64,7 @@ window.onload = function(){
     var end = document.getElementById("end");
     var status = document.getElementById("status");
     var game = document.getElementById("game");
-    var boundaryExample = document.getElementById("example")
+    //var boundaryExample = document.getElementById("example");
 
     // Variables
 
@@ -75,7 +75,7 @@ window.onload = function(){
     // Event Listener
 
     start.addEventListener("click",function(){
-        resetGame();
+        restartGame();
     });
 
     start.addEventListener("mouseover", function(){
