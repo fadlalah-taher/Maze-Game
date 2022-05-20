@@ -1,12 +1,28 @@
 window.onload = function(){
 
     // Function
+    
+    function gameStart(){
+        active = true;
+        changeBackgroundColor("#eeeeee");
+    }
+
+    function gameEnd(){
+        if(active){
+            active = false;
+            score += 5;
+            won = true;
+            displayResult(won);
+        }
+    }
+
     function cheating(){
         if(active){
             active = false;
             alert("You are Cheating !! :(")
         }
     }
+
     function checkBoundries(){
         if(active){
             changeBackgroundColor("red");
@@ -46,6 +62,14 @@ window.onload = function(){
     var score = 0;
 
     // Event Listener
+
+    start.addEventListener("click", function(){
+        gameStart();
+    });
+
+    end.addEventListener("click", function(){
+        gameEnd();
+    });
 
     for(var i = 0; i < boundaries.length ; i++){
         boundaries[i].addEventListener("mouseover",function(){
