@@ -1,16 +1,14 @@
 window.onload = function(){
-
+    var timerVariable;
+    var count = 0;
     // Function
     var startt;
     function gameStart(){
         active = true;
-        //startt = new Date().getTime();
-        //startt = Date.now();
-        //clearInterval(timerVariable);
-        //console.log(startt);
-        var timerVariable = setInterval(countUpTimer, 1000);
+        timerVariable = setInterval(countUpTimer, 1000);
         changeBackgroundColor("#eeeeee");
         status.innerHTML = "S   >   E ";
+        count = count + 1;
     }
 
     function lastScore(value){
@@ -18,15 +16,22 @@ window.onload = function(){
             last.innerHTML = "Last " + value ;
         }   
     }
+    var seconds;
+    var minute;
+    var hour;
     //var timerVariable = setInterval(countUpTimer, 1000);
     var totalSeconds = 0;
     function countUpTimer() {
         ++totalSeconds;
-        var hour = Math.floor(totalSeconds / 3600);
-        var minute = Math.floor((totalSeconds - hour * 3600) / 60);
-        var seconds = totalSeconds - (hour * 3600 + minute * 60);
+        hour = Math.floor(totalSeconds / 3600);
+        minute = Math.floor((totalSeconds - hour * 3600) / 60);
+        seconds = totalSeconds - (hour * 3600 + minute * 60);
         
-        live.innerHTML =  minute + ":" + seconds;
+        live.innerHTML = "live <br>"+ minute + ":" + seconds;
+      }
+      function stopInterval(){
+        clearInterval(timerVariable);
+        totalSeconds = 0;
       }
     var millis;
     function gameEnd(){
@@ -35,17 +40,9 @@ window.onload = function(){
             score += 5;
             won = true;
             displayResult(won);
-            console.log(startt);
-            var milliseconds = Date.now() - startt;
-            console.log("mill"+ milliseconds)
-            console.log('Seconds passed = ' + milliseconds / 1000);
-            millis = milliseconds / 1000;
-            lastScore(millis);
-            /*var end = new Date().getTime();
-            var time = end - startt;
-            console.log(startt);
-            console.log(end);
-            console.log("time"+ time);*/
+            stopInterval();
+            displaybestlast(won);
+            //displaybestlast(result)
         }
     }
     // Restart
@@ -61,6 +58,7 @@ window.onload = function(){
         if(active){
             active = false;
             status.innerHTML = "You are Cheating !  Go inside :)";
+            stopInterval();
         }
     }
 
@@ -71,6 +69,7 @@ window.onload = function(){
             won = false;
             score -= 10;
             displayResult(won);
+            stopInterval();
         }
     }
 
@@ -79,14 +78,43 @@ window.onload = function(){
             boundaries[i].style.backgroundColor = color;
         }
     }
+    var maxSecond = 0;
+    var minSecond = 0;
+    function displaybestlast(result){
+        //var maxSecond = 0;
+        if(result == true){
+        if(seconds > 0 && count == 1){
+            maxSecond = seconds;
+            minSecond = seconds;
+            best.innerHTML = "Best <br>"+ minute + ":" + maxSecond;
+            last.innerHTML = "Last <br>"+ minute + ":" + maxSecond;
+            console.log("first");
+        }
 
+        else if(minSecond > seconds){
+            minSecond = seconds;
+            console.log("previous is bigger");
+            best.innerHTML = "Best <br>"+ minute + ":" + minSecond;
+        }
+        else if (maxSecond < seconds){
+            maxSecond = seconds;
+            console.log("second bigger");
+            last.innerHTML = "Last <br>"+ minute + ":" + seconds;
+        }
+    }
+        /*if(result == true){
+            if(seconds > 0){
+            best.innerHTML = "best <br>"+ minute + ":" + seconds;
+        }
+        }*/
+    }
     function displayResult(won){
         if(won){
-            status.innerHTML = "You Won!" + score ;
+            status.innerHTML = "You Won!";
             yourScore.innerHTML = "Your Score " + score ;
         }
         else{
-            status.innerHTML = "You Lost!" + score ;
+            status.innerHTML = "You Lost!";
             yourScore.innerHTML = "Your Score " + score ;
         }
     }
