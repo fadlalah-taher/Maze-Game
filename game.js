@@ -1,39 +1,62 @@
 window.onload = function(){
+
+
+     // DOM
+
+     var boundaries = document.getElementsByClassName("boundary");
+     var start = document.getElementById("start");
+     var end = document.getElementById("end");
+     var status = document.getElementById("status");
+     var game = document.getElementById("game");
+     var last = document.getElementById("last");
+     var best = document.getElementById("best");
+     var yourScore = document.getElementById("score");
+     var live = document.getElementById("live");
+
+
+    // Variables
+
+    var active = false;
+    var won = true;
+    var score = 0;
+    // countUp Variables
+    var maxSecond = 0;
+    var minSecond = 0;
+    var seconds = 0;
+    var minute = 0;
+    var hour= 0;
     var timerVariable;
     var count = 0;
+    var totalSeconds = 0;
+
+
     // Function
-    var startt;
+
     function gameStart(){
         active = true;
         timerVariable = setInterval(countUpTimer, 1000);
         changeBackgroundColor("#eeeeee");
-        status.innerHTML = "S   >   E ";
-        count = count + 1;
+        status.innerHTML = "Game On S   >   E ";
+        count++;
     }
-
-    function lastScore(value){
-        if(value > 0){
-            last.innerHTML = "Last " + value ;
-        }   
-    }
-    var seconds;
-    var minute;
-    var hour;
-    //var timerVariable = setInterval(countUpTimer, 1000);
-    var totalSeconds = 0;
+    
+    // countUp Timer
     function countUpTimer() {
+        console.log("second"+seconds);
+        console.log(totalSeconds);
         ++totalSeconds;
         hour = Math.floor(totalSeconds / 3600);
         minute = Math.floor((totalSeconds - hour * 3600) / 60);
         seconds = totalSeconds - (hour * 3600 + minute * 60);
-        
+        console.log("countUp"+ seconds);
         live.innerHTML = "live <br>"+ minute + ":" + seconds;
       }
       function stopInterval(){
         clearInterval(timerVariable);
         totalSeconds = 0;
       }
-    var millis;
+
+    //var millis;
     function gameEnd(){
         if(active){
             active = false;
@@ -42,16 +65,20 @@ window.onload = function(){
             displayResult(won);
             stopInterval();
             displaybestlast(won);
-            //displaybestlast(result)
         }
     }
+
     // Restart
     function restartGame(){
         active = false;
         won = true;
         score = 0;
         status.innerHTML = "Restart Game!";
+        yourScore.innerHTML = "Your Score " + score ;
         changeBackgroundColor("#eeeeee");
+        stopInterval();  
+        seconds = 0;
+        count = 1;
     }
 
     function cheating(){
@@ -68,6 +95,7 @@ window.onload = function(){
             active = false;
             won = false;
             score -= 10;
+            count--;
             displayResult(won);
             stopInterval();
         }
@@ -78,36 +106,29 @@ window.onload = function(){
             boundaries[i].style.backgroundColor = color;
         }
     }
-    var maxSecond = 0;
-    var minSecond = 0;
+    
     function displaybestlast(result){
-        //var maxSecond = 0;
         if(result == true){
-        if(seconds > 0 && count == 1){
-            maxSecond = seconds;
-            minSecond = seconds;
-            best.innerHTML = "Best <br>"+ minute + ":" + maxSecond;
-            last.innerHTML = "Last <br>"+ minute + ":" + maxSecond;
-            console.log("first");
+            if(count == 1){//seconds > 0 && 
+                maxSecond = seconds;
+                minSecond = seconds;
+                best.innerHTML = "Best <br>"+ minute + ":" + maxSecond;
+                last.innerHTML = "Last <br>"+ minute + ":" + maxSecond;
+                console.log("first");
+            }
+            else if(minSecond > seconds){
+                minSecond = seconds;
+                console.log("previous is bigger");
+                best.innerHTML = "Best <br>"+ minute + ":" + minSecond;
+            }
+            else if (maxSecond < seconds){
+                maxSecond = seconds;
+                console.log("second bigger");
+                last.innerHTML = "Last <br>"+ minute + ":" + seconds;
+            }
         }
+    }
 
-        else if(minSecond > seconds){
-            minSecond = seconds;
-            console.log("previous is bigger");
-            best.innerHTML = "Best <br>"+ minute + ":" + minSecond;
-        }
-        else if (maxSecond < seconds){
-            maxSecond = seconds;
-            console.log("second bigger");
-            last.innerHTML = "Last <br>"+ minute + ":" + seconds;
-        }
-    }
-        /*if(result == true){
-            if(seconds > 0){
-            best.innerHTML = "best <br>"+ minute + ":" + seconds;
-        }
-        }*/
-    }
     function displayResult(won){
         if(won){
             status.innerHTML = "You Won!";
@@ -119,26 +140,8 @@ window.onload = function(){
         }
     }
 
-    // DOM
-
-    var boundaries = document.getElementsByClassName("boundary");
-    var start = document.getElementById("start");
-    var end = document.getElementById("end");
-    var status = document.getElementById("status");
-    var game = document.getElementById("game");
-    var last = document.getElementById("last");
-    var best = document.getElementById("best");
-    var yourScore = document.getElementById("score");
-    var live = document.getElementById("live");
-    //var boundaryExample = document.getElementsByClassName("example");
+   
     
-
-    // Variables
-
-    var active = false;
-    var won = true;
-    var score = 0;
-
     // Event Listener
 
     start.addEventListener("click",function(){
@@ -163,12 +166,3 @@ window.onload = function(){
         cheating();
     });
 };
-/*var start = new Date().getTime();
-
-for (i = 0; i < 50000; ++i) {
-// do something
-}
-
-var end = new Date().getTime();
-var time = end - start;
-alert('Execution time: ' + time); */
