@@ -54,6 +54,7 @@ window.onload = function(){
         }
         else{
             status.innerHTML = "You Lost! Your Score is " + score ;
+            boundaryExample.innerHTML = score;
         }
     }
 
@@ -64,7 +65,8 @@ window.onload = function(){
     var end = document.getElementById("end");
     var status = document.getElementById("status");
     var game = document.getElementById("game");
-    //var boundaryExample = document.getElementById("example");
+    //var boundaryExample = document.getElementsByClassName("example");
+    
 
     // Variables
 
