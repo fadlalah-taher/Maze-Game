@@ -42,21 +42,19 @@ window.onload = function(){
     
     // countUp Timer
     function countUpTimer() {
-        console.log("second"+seconds);
-        console.log(totalSeconds);
         ++totalSeconds;
-        hour = Math.floor(totalSeconds / 3600);
+        var hour = Math.floor(totalSeconds / 3600);
         minute = Math.floor((totalSeconds - hour * 3600) / 60);
         seconds = totalSeconds - (hour * 3600 + minute * 60);
         console.log("countUp"+ seconds);
         live.innerHTML = "live <br>"+ minute + ":" + seconds;
       }
-      function stopInterval(){
+
+    function stopInterval(){
         clearInterval(timerVariable);
         totalSeconds = 0;
-      }
+    }
 
-    //var millis;
     function gameEnd(){
         if(active){
             active = false;
@@ -77,8 +75,14 @@ window.onload = function(){
         yourScore.innerHTML = "Your Score " + score ;
         changeBackgroundColor("#eeeeee");
         stopInterval();  
-        seconds = 0;
-        count = 1;
+        restartlive();
+        count = 0;
+    }
+
+    function restartlive(){
+        best.innerHTML = "Best <br>"+ 0 + ":" + 0;
+        live.innerHTML = "Last <br>"+ 0 + ":" + 0;
+        last.innerHTML = "Last <br>"+ 0 + ":" + 0;
     }
 
     function cheating(){
@@ -113,7 +117,7 @@ window.onload = function(){
                 maxSecond = seconds;
                 minSecond = seconds;
                 best.innerHTML = "Best <br>"+ minute + ":" + maxSecond;
-                last.innerHTML = "Last <br>"+ minute + ":" + maxSecond;
+                last.innerHTML = "Last <br>"+ minute + ":" + minSecond;
                 console.log("first");
             }
             else if(minSecond > seconds){
@@ -139,9 +143,7 @@ window.onload = function(){
             yourScore.innerHTML = "Your Score " + score ;
         }
     }
-
    
-    
     // Event Listener
 
     start.addEventListener("click",function(){
